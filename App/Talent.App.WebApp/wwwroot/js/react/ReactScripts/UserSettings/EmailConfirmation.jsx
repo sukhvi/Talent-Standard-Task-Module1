@@ -33,7 +33,7 @@ export default class EmailConfirmation extends React.Component {
                 if (response.isSuccess) {
                     Cookies.set('talentAuthToken', this.state.token);
                     TalentUtil.notification.show("Email Verification Successfull", "success", null, null)
-                    debugger
+                    
                     window.location = userNavigation(response.currentRole);
                 } else {
                     TalentUtil.notification.show(response.message, "error", null, null)

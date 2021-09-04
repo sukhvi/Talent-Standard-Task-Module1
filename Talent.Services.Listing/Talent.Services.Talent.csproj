@@ -14,6 +14,7 @@
     <RootNamespace>Talent.Services.Talent</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Mars.Services.Listing' " />
   <ItemGroup>
     <Folder Include="Domain\Models\" />
     <Folder Include="wwwroot\" />

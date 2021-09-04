@@ -15,7 +15,7 @@ import EmailConfirmation from "../UserSettings/EmailConfirmation.jsx";
 import ResetPassword from "../Account/ResetPassword.jsx";
 import VerifyClient from "../Account/VerifyClient.jsx";
 import ManageClient from "../Recruiter/ManageClients/ManageClient.jsx";
-import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 
 export default class App extends React.Component {
     render() {

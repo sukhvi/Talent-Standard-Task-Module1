@@ -1,0 +1,50 @@
+/* Common CSS */
+
+.padding-bottom-10 {
+    padding-bottom: 10px;
+}
+
+.pb15 {
+    padding-bottom: 15px; 
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.py10 {
+    padding:10px 0;
+}
+
+.text-center {
+    text-align: center;;
+}
+
+/* Date Picker  */
+
+.full-width .react-datepicker-wrapper , .full-width .react-datepicker__input-container {
+ display: block;
+}
+
+
+/* visa status */
+
+.save-button {
+    margin-top: 24px !important;
+}
+
+/* Profile */
+
+.circular-thumbnail {
+    
+    padding: 0 !important;
+    
+}
+
+.image-upload {
+    font-size: 75px !important;
+}
+
+.hidden {
+    display: none !important;
+}

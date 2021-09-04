@@ -21,9 +21,13 @@ import TalentStatus from './TalentStatus.jsx';
 export default class AccountProfile extends React.Component {
     constructor(props) {
         super(props)
-
+        
         this.state = {
             profileData: {
+                firstName:"",
+                lastName:"",
+                email:"",
+                phone:"",
                 address: {},
                 nationality: '',
                 education: [],
@@ -91,14 +95,16 @@ export default class AccountProfile extends React.Component {
 
     //updates component's state and saves data
     updateAndSaveData(newValues) {
-        let newProfile = Object.assign({}, this.state.profileData, newValues)
+        let newProfile = Object.assign({}, this.state.profileData, newValues);
         this.setState({
             profileData: newProfile
         }, this.saveProfile)
     }
 
     updateForComponentId(componentId, newValues) {
-        this.updateAndSaveData(newValues)
+        let data = {};
+        data[componentId] = newValues;
+        this.updateAndSaveData(data)
     }
 
     saveProfile() {
@@ -112,7 +118,7 @@ export default class AccountProfile extends React.Component {
             type: "POST",
             data: JSON.stringify(this.state.profileData),
             success: function (res) {
-                console.log(res)
+               
                 if (res.success == true) {
                     TalentUtil.notification.show("Profile updated sucessfully", "success", null, null)
                 } else {
@@ -121,7 +127,6 @@ export default class AccountProfile extends React.Component {
 
             }.bind(this),
             error: function (res, a, b) {
-                console.log(res)
                 console.log(a)
                 console.log(b)
             }
@@ -148,8 +153,7 @@ export default class AccountProfile extends React.Component {
                                             tooltip='Linking to online social networks adds credibility to your profile'
                                         >
                                             <SocialMediaLinkedAccount
-                                                linkedAccounts={this.state.profileData.linkedAccounts}
-                                                updateProfileData={this.updateWithoutSave}
+                                                profileData={this.state.profileData}
                                                 saveProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
@@ -158,17 +162,15 @@ export default class AccountProfile extends React.Component {
                                             tooltip='Enter your contact details'
                                         >
                                             <IndividualDetailSection
-                                                controlFunc={this.updateForComponentId}
-                                                details={profile}
-                                                componentId='contactDetails'
+                                                profileData={this.state.profileData}
+                                                saveProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
                                         <FormItemWrapper
                                             title='Address'
                                             tooltip='Enter your current address'>
                                             <Address
-                                                addressData={this.state.profileData.address}
-                                                updateProfileData={this.updateWithoutSave}
+                                                profileData={this.state.profileData}
                                                 saveProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
@@ -187,7 +189,7 @@ export default class AccountProfile extends React.Component {
                                         >
                                             <Language
                                                 languageData={this.state.profileData.languages}
-                                                updateProfileData={this.updateAndSaveData}
+                                                updateProfileData={this.loadData}
                                             />
                                         </FormItemWrapper>
                                         <FormItemWrapper
@@ -196,7 +198,7 @@ export default class AccountProfile extends React.Component {
                                         >
                                             <Skill
                                                 skillData={this.state.profileData.skills}
-                                                updateProfileData={this.updateAndSaveData}
+                                                updateProfileData={this.loadData}
                                             />
                                         </FormItemWrapper>
                                         <FormItemWrapper
@@ -205,7 +207,7 @@ export default class AccountProfile extends React.Component {
                                         >
                                             <Experience
                                                 experienceData={this.state.profileData.experience}
-                                                updateProfileData={this.updateAndSaveData}
+                                                updateProfileData={this.loadData}
                                             />
                                         </FormItemWrapper>
                                         <FormItemWrapper
@@ -233,8 +235,7 @@ export default class AccountProfile extends React.Component {
                                             <VisaStatus
                                                 visaStatus={this.state.profileData.visaStatus}
                                                 visaExpiryDate={this.state.profileData.visaExpiryDate}
-                                                updateProfileData={this.updateWithoutSave}
-                                                saveProfileData={this.updateAndSaveData}
+                                                updateProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
                                         <FormItemWrapper
@@ -242,9 +243,8 @@ export default class AccountProfile extends React.Component {
                                             tooltip='What is your current status in jobseeking?'
                                         >
                                             <TalentStatus
-                                                status={this.state.profileData.jobSeekingStatus}
-                                                updateProfileData={this.updateWithoutSave}
-                                                saveProfileData={this.updateAndSaveData}
+                                                jobSeekingStatus={this.state.profileData.jobSeekingStatus}
+                                                updateProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
                                         <FormItemWrapper
@@ -253,7 +253,8 @@ export default class AccountProfile extends React.Component {
                                             hideSegment={true}
                                         >
                                             <PhotoUpload
-                                                imageId={this.state.profileData.profilePhotoUrl}
+                                                imageId={this.state.profileData.profilePhoto}
+                                                profilePhotoUrl={this.state.profileData.profilePhotoUrl}
                                                 updateProfileData={this.updateWithoutSave}
                                                 savePhotoUrl='http://localhost:60290/profile/profile/updateProfilePhoto'
                                             />

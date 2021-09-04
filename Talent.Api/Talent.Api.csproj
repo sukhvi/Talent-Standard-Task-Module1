@@ -12,6 +12,7 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Mars.Api' " />
   <ItemGroup>
     <Folder Include="images\" />
     <Folder Include="wwwroot\" />

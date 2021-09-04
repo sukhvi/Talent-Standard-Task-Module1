@@ -30,7 +30,7 @@ namespace Talent.Common.Services
                 .AddCommandLine(args)
                 .Build();
 
-            var hostUrl = config["hosturl"];
+            var hostUrl = config["ASPNETCORE_URLS"];
             if (string.IsNullOrEmpty(hostUrl))
                 hostUrl = "http://0.0.0.0:60880";
 
