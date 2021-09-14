@@ -73,7 +73,8 @@ export default class AccountProfile extends React.Component {
     loadData() {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/getTalentProfile',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/getTalentProfile',
+            // url: 'http://localhost:60290/profile/profile/getTalentProfile',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -110,7 +111,8 @@ export default class AccountProfile extends React.Component {
     saveProfile() {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/updateTalentProfile',
+            // url: 'http://localhost:60290/profile/profile/updateTalentProfile',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/updateTalentProfile',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -210,7 +212,7 @@ export default class AccountProfile extends React.Component {
                                                 updateProfileData={this.loadData}
                                             />
                                         </FormItemWrapper>
-                                        <FormItemWrapper
+                                        {/* <FormItemWrapper
                                             title='Education'
                                             tooltip='Add your educational background'
                                         >
@@ -218,8 +220,8 @@ export default class AccountProfile extends React.Component {
                                                 educationData={this.state.profileData.education}
                                                 updateProfileData={this.updateAndSaveData}
                                             />
-                                        </FormItemWrapper>
-                                        <FormItemWrapper
+                                        </FormItemWrapper> */}
+                                        {/* <FormItemWrapper
                                             title='Certification'
                                             tooltip='List your certificates, honors and awards'
                                         >
@@ -227,7 +229,7 @@ export default class AccountProfile extends React.Component {
                                                 certificateData={this.state.profileData.certifications}
                                                 updateProfileData={this.updateAndSaveData}
                                             />
-                                        </FormItemWrapper>
+                                        </FormItemWrapper> */}
                                         <FormItemWrapper
                                             title='Visa Status'
                                             tooltip='What is your current Visa/Citizenship status?'
@@ -256,10 +258,10 @@ export default class AccountProfile extends React.Component {
                                                 imageId={this.state.profileData.profilePhoto}
                                                 profilePhotoUrl={this.state.profileData.profilePhotoUrl}
                                                 updateProfileData={this.updateWithoutSave}
-                                                savePhotoUrl='http://localhost:60290/profile/profile/updateProfilePhoto'
+                                                savePhotoUrl='https://leo-profileapi.azurewebsites.net/profile/profile/updateProfilePhoto'
                                             />
                                         </FormItemWrapper>
-                                        <FormItemWrapper
+                                        {/* <FormItemWrapper
                                             title='Profile Video'
                                             tooltip='Upload a brief self-introduction video'
                                             hideSegment={true}
@@ -281,7 +283,7 @@ export default class AccountProfile extends React.Component {
                                                 updateProfileData={this.updateWithoutSave}
                                                 saveCVUrl={'http://localhost:60290/profile/profile/updateTalentCV'}
                                             />
-                                        </FormItemWrapper>
+                                        </FormItemWrapper> */}
                                         <SelfIntroduction
                                             summary={this.state.profileData.summary}
                                             description={this.state.profileData.description}

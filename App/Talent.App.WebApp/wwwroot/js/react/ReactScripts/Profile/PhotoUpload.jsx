@@ -1,7 +1,7 @@
 ﻿/* Photo upload section */
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
-import { Grid, Icon, Button, Image } from 'semantic-ui-react';
+import { Grid, Icon, Button, Image, Popup } from 'semantic-ui-react';
 
 export default class PhotoUpload extends Component {
 
@@ -53,15 +53,13 @@ export default class PhotoUpload extends Component {
                 profilePhotoUrl: reader.result
             });
         }
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
+        this.uploadProfilePhoto();
+        
     };
 
     uploadProfilePhoto(e) {
-        debugger;
-        if(this.state.showPreview===false) { 
-            TalentUtil.notification.show("Select The Profile Image first", "error", null, null)
-            return false;
-        }
+        
         var cookies = Cookies.get('talentAuthToken');
         var file = $("input[type=file]").get(0).files[0];
         let formData = new FormData()        
@@ -70,7 +68,8 @@ export default class PhotoUpload extends Component {
         console.log(formData.get("files"));
 
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/updateProfilePhoto',
+            // url: 'http://localhost:60290/profile/profile/updateProfilePhoto',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/updateProfilePhoto',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
             },
@@ -93,7 +92,8 @@ export default class PhotoUpload extends Component {
         debugger;
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/deleteProfilePhoto',
+            // url: 'http://localhost:60290/profile/profile/deleteProfilePhoto',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/deleteProfilePhoto',
             type: "POST",
             data: JSON.stringify({ProfilePhoto:id}),
             headers: {
@@ -154,7 +154,7 @@ export default class PhotoUpload extends Component {
 
 
         return (<React.Fragment>
-            <Grid.Column textAlign='center'>
+            {/* <Grid.Column textAlign='center'>
                 <input
                     type="file"
                     ref={(ref) => this.upload = ref}
@@ -163,6 +163,20 @@ export default class PhotoUpload extends Component {
                 />
                 {imageView}
                 {button}
+            </Grid.Column> */}
+            <Grid.Column >
+            <input
+                    type="file"
+                    ref={(ref) => this.upload = ref}
+                    style={{ display: 'none' }}
+                    onChange={this.handleImageChange}
+                />
+                <Popup
+                trigger={<div>{imageView}</div>}
+                content='Click on photo to change'
+                
+                position='bottom center'
+                />
             </Grid.Column>
         </React.Fragment>)
     }

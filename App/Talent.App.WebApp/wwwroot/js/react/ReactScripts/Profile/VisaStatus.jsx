@@ -33,15 +33,21 @@ export default class VisaStatus extends React.Component {
   }
 
   handleUpdate(e){
-    const data = {
-      "visaStatus": this.state.visaStatus,
-      "visaExpiryDate": this.state.visaExpiryDate
-    }
-    this.props.updateProfileData(data);
+    debugger;
+    this.setState({
+      'visaExpiryDate':e
+    },()=>{
+      const data = {
+        "visaStatus": this.state.visaStatus,
+        "visaExpiryDate": this.state.visaExpiryDate
+      }
+      this.props.updateProfileData(data);
+    });
+    
   }
 
   handleSelect(e, name) {
-
+    debugger;
     this.setState({
       "visaStatus" : e.target.value
     },()=>{
@@ -77,19 +83,21 @@ export default class VisaStatus extends React.Component {
                           />
                       </div>
                   </div>
-                  {!(this.state.visaStatus === "Citizen" || this.state.visaStatus === "Permanent-Resident") && <div className="column">
+                  {!(this.state.visaStatus === "" || this.state.visaStatus === "Citizen" || this.state.visaStatus === "Permanent-Resident") && <div className="column">
                       <div className="field">
                           <label>Visa Expirty Date</label>
                           <DatePicker
                               selected={this.state.visaExpiryDate}
-                              onChange={(e) => this.setState({'visaExpiryDate':e})}
+                              // onChange={(e) => this.setState({'visaExpiryDate':e})}
+                              onChange={(e) => this.handleUpdate(e)}
+                              
                               minDate={moment()}
                           />
                       </div>
                   </div>} 
-                  <div className="column save-button">
+                  {/* <div className="column save-button">
                     <button type="button" onClick={()=> this.handleUpdate()} className="ui teal button">Save</button>
-                  </div>
+                  </div> */}
               </div>
           </div>
       )

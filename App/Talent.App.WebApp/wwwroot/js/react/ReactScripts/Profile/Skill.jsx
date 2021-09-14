@@ -19,6 +19,7 @@ export default class Skill extends React.Component {
         this.addSkill = this.addSkill.bind(this);
         this.deleteSkill = this.deleteSkill.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.addSkillSection = this.addSkillSection.bind(this);
 
     }
 
@@ -28,7 +29,8 @@ export default class Skill extends React.Component {
         } else {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/addSkill',
+            // url: 'http://localhost:60998/profile/profile/addSkill',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/addSkill',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -60,7 +62,8 @@ export default class Skill extends React.Component {
     deleteSkill(skill) {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/deleteSkill',
+            // url: 'http://localhost:60998/profile/profile/deleteSkill',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/deleteSkill',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -85,6 +88,12 @@ export default class Skill extends React.Component {
         const data = Object.assign({}, this.state.skill);
         data[e.target.name] = e.target.value
         this.setState({ skill : data })
+    }
+
+    addSkillSection(value) {        
+        var skill = Object.assign({}, this.state.skill);
+        skill.level = "Beginner";
+        this.setState({ skill : skill, addSection:true });        
     }
 
     render() {
@@ -117,7 +126,7 @@ export default class Skill extends React.Component {
                                 options={levelOptions}
                                 selectedOption={this.state.skill.level}
                                 controlFunc={this.handleChange}
-                                placeholder="Select Level"
+                                
                             />
                         </div>
                     </div>
@@ -167,8 +176,7 @@ export  class SkillList extends React.Component {
         this.updateSkill = this.updateSkill.bind(this);
     }
 
-    componentDidMount(){
-        
+    componentDidMount(){        
         this.setState({
             skill: this.props.skill
         });
@@ -184,7 +192,8 @@ export  class SkillList extends React.Component {
     updateSkill() {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/updateSkill',
+            // url: 'http://localhost:60998/profile/profile/updateSkill',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/updateSkill',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -207,10 +216,9 @@ export  class SkillList extends React.Component {
     render() {
         
         var levelOptions = [
-            { title:"Basic", value:"Basic" },
-            { title:"Conversational", value:"Conversational" },
-            { title:"Fluent", value:"Fluent" },
-            { title:"Native/Bilingual", value:"Native" },
+            { title:"Beginner", value:"Beginner" },
+            { title:"Intermediate", value:"Intermediate" },
+            { title:"Expert", value:"Expert" },
         ];
         return (
             <tr key={this.props.id}>
@@ -243,7 +251,7 @@ export  class SkillList extends React.Component {
                                 options={levelOptions}
                                 selectedOption={this.state.skill.level}
                                 controlFunc={this.handleChange}
-                                placeholder="Select Experience Level"
+                                
                             />
                         </td>
                         <td className="right aligned" >

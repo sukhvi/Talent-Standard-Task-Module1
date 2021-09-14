@@ -19,6 +19,7 @@ export default class Language extends React.Component {
         this.addLanguage = this.addLanguage.bind(this);
         this.deleteLanguage = this.deleteLanguage.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.addLanguageSection = this.addLanguageSection.bind(this);
 
     }
 
@@ -30,7 +31,7 @@ export default class Language extends React.Component {
         else {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/addLanguage',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/addLanguage',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -63,7 +64,7 @@ export default class Language extends React.Component {
         
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/deletelanguage',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/deletelanguage',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -89,6 +90,12 @@ export default class Language extends React.Component {
         this.setState({ language : data })
     }
 
+    addLanguageSection(value) {        
+        var language = Object.assign({}, this.state.language);
+        language.level = "Basic";
+        this.setState({ language : language, addSection:true });        
+    }
+
     render() {
         var levelOptions = [
             { title:"Basic", value:"Basic" },
@@ -109,7 +116,7 @@ export default class Language extends React.Component {
                         value={this.state.language.name}
                         controlFunc={this.handleChange}
                         maxLength={80}
-                        placeholder="Add language name"
+                        placeholder=""
                         errorMessage="Please enter valid language name"
                         />
                     </div>
@@ -120,7 +127,6 @@ export default class Language extends React.Component {
                                 options={levelOptions}
                                 selectedOption={this.state.language.level}
                                 controlFunc={this.handleChange}
-                                placeholder="Select Level"
                             />
                         </div>
                     </div>
@@ -139,7 +145,7 @@ export default class Language extends React.Component {
                             <tr>
                                 <th >Language</th>
                                 <th >Level</th>
-                                <th className="right aligned" ><button type="button" onClick={()=> this.setState({ addSection: true })} className="ui teal button" ><i aria-hidden="true" className="plus icon"></i> Add New</button></th>
+                                <th className="right aligned" ><button type="button" onClick={()=> this.addLanguageSection(true)} className="ui teal button" ><i aria-hidden="true" className="plus icon"></i> Add New</button></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,7 +154,7 @@ export default class Language extends React.Component {
                         </tbody>
                         </table>
                     </div>
-                </div>
+                </div> 
             </div>
             </div>
         )
@@ -187,7 +193,7 @@ export  class LanguageList extends React.Component {
     updateLanguage() {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/updateLanguage',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/updateLanguage',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -246,7 +252,7 @@ export  class LanguageList extends React.Component {
                                 options={levelOptions}
                                 selectedOption={this.state.language.level}
                                 controlFunc={this.handleChange}
-                                placeholder="Select Level"
+                                
                             />
                         </td>
                         <td className="right aligned" >

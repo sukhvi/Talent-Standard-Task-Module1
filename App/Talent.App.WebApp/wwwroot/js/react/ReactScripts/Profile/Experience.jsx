@@ -29,7 +29,7 @@ export default class Experience extends React.Component {
     }
 
     addExperience() {
-        debugger;
+        
         var startDate = moment(this.state.experience.start);
         var endDate = moment(this.state.experience.end);
 
@@ -37,12 +37,18 @@ export default class Experience extends React.Component {
 
         
 
-        if(this.state.experience.company ==='' || this.state.experience.position =='' || diff<0) {
-            TalentUtil.notification.show("Experience not valid", "error", null, null)
+        if(this.state.experience.company === '' || this.state.experience.position  === '' ) {
+            if(diff<0) {
+                TalentUtil.notification.show("End date can not be before the start date", "error", null, null)
+            } else {
+                TalentUtil.notification.show("Experience not valid", "error", null, null)
+            }
+            
         } else {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/addExperience',
+            // url: 'http://localhost:60998/profile/profile/addExperience',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/addExperience',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -77,7 +83,8 @@ export default class Experience extends React.Component {
     deleteExperience(experience) {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/deleteExperience',
+            // url: 'http://localhost:60998/profile/profile/deleteExperience',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/deleteExperience',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -248,7 +255,8 @@ export  class ExperienceList extends React.Component {
     updateExperience() {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/updateExperience',
+            // url: 'http://localhost:60998/profile/profile/updateExperience',
+            url: 'https://leo-profileapi.azurewebsites.net/profile/profile/updateExperience',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'

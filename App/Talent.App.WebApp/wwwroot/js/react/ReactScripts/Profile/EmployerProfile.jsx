@@ -192,7 +192,7 @@ export default class EmployeeProfile extends React.Component {
                                         >
                                             <IndividualDetailSection
                                                 controlFunc={this.updateForComponentId}
-                                                details={this.state.employerData.primaryContact}
+                                                profileData={this.state.employerData.primaryContact}
                                                 componentId='primaryContact'
                                             />
                                         </FormItemWrapper>

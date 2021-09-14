@@ -7,9 +7,17 @@ export class IndividualDetailSection extends Component {
         
         super(props);
 
-        const { firstName, lastName, email, phone  } = props.profileData;
 
-        const details = Object.assign({}, {firstName, lastName, email, phone});
+        const details = props.profileData ?
+            Object.assign({}, props.profileData)
+            : {
+                firstName: "",
+                lastName: "",
+                email: "",
+                phone: ""
+            }
+
+       
 
         this.state = {
             showEditSection: false,

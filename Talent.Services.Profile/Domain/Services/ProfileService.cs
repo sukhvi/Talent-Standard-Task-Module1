@@ -475,8 +475,66 @@ namespace Talent.Services.Profile.Domain.Services
 
         public async Task<IEnumerable<TalentSnapshotViewModel>> GetTalentSnapshotList(string employerOrJobId, bool forJob, int position, int increment)
         {
-            //Your code here;
-            throw new NotImplementedException();
+
+            if (position >= _userRepository.Collection.Count()) return null;
+            var talentList = _userRepository.Collection.Skip(position).Take(increment).AsEnumerable();
+            var result = new List<TalentSnapshotViewModel>();
+            var videoUrl = "";
+            var cvUrl = "";
+            UserExperience experience;
+            TalentSnapshotCurrentEmploymentViewModel employmentViewModel = null;
+
+            foreach (var item in talentList)
+            {
+                videoUrl = string.IsNullOrWhiteSpace(item.VideoName)
+                    ? ""
+                    : await _fileService.GetFileURL(item.VideoName, FileType.UserVideo);
+                cvUrl = string.IsNullOrWhiteSpace(item.CvName)
+                    ? ""
+                    : await _fileService.GetFileURL(item.CvName, FileType.UserCV);
+                experience = null;
+                // Find the lastest job
+                foreach (var exp in item.Experience)
+                {
+                    if (experience == null)
+                    {
+                        experience = exp;
+                    }
+                    else
+                    {
+                        if (experience.End < exp.End)
+                        {
+                            experience = exp;
+                        }
+                    }
+                }
+                if (experience != null)
+                {
+                    employmentViewModel = new TalentSnapshotCurrentEmploymentViewModel
+                    {
+                        Company = experience.Company,
+                        Position = experience.Position
+                    };
+                }
+
+                var newItem = new TalentSnapshotViewModel
+                {
+                    Id = item.Id,
+                    Name = item.FirstName + " " + item.LastName,
+                    PhotoId = item.ProfilePhotoUrl,
+                    VideoUrl = videoUrl,
+                    CVUrl = cvUrl,
+                    Summary = item.Summary,
+                    CurrentEmployment = employmentViewModel,
+                    Visa = item.VisaStatus,
+                    Level = "",
+                    Skills = item.Skills.Select(x => x.Skill).ToList(),
+                    LinkedAccounts = item.LinkedAccounts
+                };
+                result.Add(newItem);
+            }
+            return result;
+
         }
 
         public async Task<IEnumerable<TalentSnapshotViewModel>> GetTalentSnapshotList(IEnumerable<string> ids)
@@ -643,6 +701,31 @@ namespace Talent.Services.Profile.Domain.Services
         }
 
         #endregion
+
+
+        protected TalentSnapshotViewModel TalentSnapshotFromViewModel(User model)
+        {
+            List<string> sk = new List<string>();
+            model.Skills.ForEach(skill => {
+                sk.Add(skill.Skill);
+            });
+
+            return new TalentSnapshotViewModel
+            {
+                Id = model.Id,
+                Name = model.FirstName + " " + model.MiddleName + " " + model.LastName,
+                //CurrentEmployment = model.Experience.OrderByDescending(o => o.Start).FirstOrDefault(),
+                Summary = model.Summary,
+                CVUrl = model.CvName,
+                VideoUrl = model.VideoName,
+                PhotoId = model.ProfilePhotoUrl,
+                Skills = sk.Count > 0 ? sk : (new List<string>() { "" }),
+                Visa = model.VisaStatus,
+                LinkedAccounts = model.LinkedAccounts
+            };
+        }
+
+
 
 
 

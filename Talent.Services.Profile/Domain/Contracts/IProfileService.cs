@@ -33,6 +33,7 @@ namespace Talent.Services.Profile.Domain.Contracts
         Task<IEnumerable<TalentSnapshotViewModel>> GetTalentSnapshotList(string employerOrJobId, bool forJob, int position, int increment);
         Task<IEnumerable<TalentSnapshotViewModel>> GetTalentSnapshotList(IEnumerable<string> ids);
 
+
         Task<bool> UpdateTalentProfile(TalentProfileViewModel profile, String updaterId);
         Task<string> UpdateTalentPhoto(string talentId, IFormFile file);
         Task<bool> DeleteTalentPhoto(string talentPhotoId);
