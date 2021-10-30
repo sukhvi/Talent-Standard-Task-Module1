@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace Talent.Common.Models
 {
+    [BsonIgnoreExtraElements]
     public class User : IMongoCommon
     {
         public Guid UId { get; set; }
@@ -41,8 +43,10 @@ namespace Talent.Common.Models
         public string ProfilePhoto { get; set; }
         public string ProfilePhotoUrl { get; set; }
         public string VideoName { get; set; }
+        public string VideoUrl { get; set; }
         public ICollection<TalentVideo> Videos { get; set; }
         public string CvName { get; set; }
+        public string CvUrl { get; set; }
         public LinkedAccounts LinkedAccounts { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }

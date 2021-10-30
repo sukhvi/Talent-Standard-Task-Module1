@@ -9,6 +9,6 @@ export default class Education extends React.Component {
     };
 
     render() {
-
+        return null
     }
 }

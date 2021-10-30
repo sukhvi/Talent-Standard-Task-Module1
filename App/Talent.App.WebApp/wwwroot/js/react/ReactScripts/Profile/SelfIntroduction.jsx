@@ -13,7 +13,7 @@ export default class SelfIntroduction extends React.Component {
 
 
     render() {
-       
+       return null
     }
 }
 

@@ -38,7 +38,7 @@ export class ChildSingleInput extends React.Component {
 
         return (
             <div className="field">
-                <label>{this.props.label}</label>
+                { this.props.label && <label>{this.props.label}</label> }
                 <input
                     type={this.props.inputType}
                     name={this.props.name}

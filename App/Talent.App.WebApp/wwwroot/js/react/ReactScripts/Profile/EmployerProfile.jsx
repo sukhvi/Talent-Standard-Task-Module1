@@ -114,7 +114,7 @@ export default class EmployeeProfile extends React.Component {
     };
 
     validateField(fieldName, value) {
-        //debugger
+        
         //console.log("validateField!")
         let fieldValidationErrors = this.state.formErrors;
         let emailValid = this.state.emailValid;
@@ -192,7 +192,7 @@ export default class EmployeeProfile extends React.Component {
                                         >
                                             <IndividualDetailSection
                                                 controlFunc={this.updateForComponentId}
-                                                details={this.state.employerData.primaryContact}
+                                                profileData={this.state.employerData.primaryContact}
                                                 componentId='primaryContact'
                                             />
                                         </FormItemWrapper>

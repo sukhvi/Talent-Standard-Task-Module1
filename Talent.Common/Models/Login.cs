@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Talent.Common.Models
 {
+    [BsonIgnoreExtraElements]
     public class Login : IMongoCommon
     {
         public Guid UId { get; set; }

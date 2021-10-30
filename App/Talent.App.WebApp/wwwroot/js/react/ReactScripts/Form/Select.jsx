@@ -6,7 +6,7 @@ export const Select = (props) => (
         name={props.name}
         value={props.selectedOption}
         onChange={props.controlFunc}>
-        <option value="">{props.placeholder}</option>
+        {props.placeholder && <option value="">{props.placeholder}</option>}
         {props.options.map(opt => {
             return (
                 <option

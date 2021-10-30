@@ -28,9 +28,6 @@ namespace Talent.Services.Identity.Domain.Services
         private IPasswordStorage _encryptPassword;
         private IJwtHandler _jwtHandler;
 
-
-
-
         public AuthenticationService(IRepository<User> userRepository,
                                 IRepository<Employer> employerRepository,
                                 IRepository<Login> loginRepository,
@@ -173,11 +170,7 @@ namespace Talent.Services.Identity.Domain.Services
 
             await _loginRepository.Update(user);
 
-        }
-
-        
-
-       
+        }       
 
         public async Task<JsonWebToken> LoginAsync(string email, string password)
         {
@@ -267,9 +260,6 @@ namespace Talent.Services.Identity.Domain.Services
             }
         }
 
-      
-
-        
         public async Task<bool> UniqueEmail(string email)
         {
             var existingTalent = (await _userRepository.Get(x => x.Login.Username == email)).FirstOrDefault();
@@ -283,6 +273,7 @@ namespace Talent.Services.Identity.Domain.Services
 
             return false;
         }
+
         public async Task<UserRole> DetermineUserRole(string email)
         {
             var talentUser = (await _userRepository.Get(x => x.Login.Username == email)).FirstOrDefault();
@@ -316,21 +307,15 @@ namespace Talent.Services.Identity.Domain.Services
                 return (UserRole.Talent);
             }
         }
-       
-
 
         public async Task<string> GeneratePasswordResetTokenAsync(string id)
         {
             Random random = new Random();
             string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             StringBuilder result = new StringBuilder(id);
-
             result.Append(characters[random.Next(characters.Length)]);
-
             return result.ToString();
         }
-
- 
 
         public async Task<bool> VerifyToken(string email, string token)
         {
